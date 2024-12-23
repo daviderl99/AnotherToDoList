@@ -85,7 +85,7 @@
         placeholder="Add a new task..." 
         on:keydown={handleKeydown}
       />
-      <button on:click={addTask}>Add Task</button>
+      <button on:click={addTask} class="square-button" title="Add task" aria-label="Add task"></button>
     </div>
     <div class="sort-controls">
       <select bind:value={sortBy}>
@@ -107,12 +107,10 @@
       </div>
     </div>
   {:else}
-    <div 
-      class="task-list"
+    <div class="tasks-container"
       use:dndzone={{items: sortedTasks}}
       on:consider={handleDrop} 
-      on:finalize={handleDrop}
-    >
+      on:finalize={handleDrop}>
       {#each sortedTasks as task (task.id)}
         <Task 
           {task}
@@ -125,7 +123,9 @@
 
   <div class="progress-bar">
     <div class="progress" style="width: {progress}%"></div>
-    <span class="progress-text">{completedTasks} of {totalTasks} tasks completed</span>
+    <div class="progress-text">
+      {completedTasks} of {totalTasks} tasks completed ({Math.round(progress)}%)
+    </div>
   </div>
 
   {#if completedTasks > 0}
@@ -139,57 +139,73 @@
   .section {
     margin: 20px auto;
     padding: 20px;
-    background-color: var(--background-color);
+    background-color: var(--container-background);
     border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    width: 60%;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+  }
+
+  .tasks-container {
+    padding: 5px;
+    margin: 20px 0;
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 8px;
+  }
+
+  @media (max-width: 600px) {
+    .section {
+      margin: 0;
+      padding: 15px;
+      border-radius: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .tasks-container {
+      flex: 1;
+      margin: 10px 0;
+      max-height: none;
+      height: calc(100vh - 180px);
+    }
   }
 
   h2 {
-    margin-bottom: 20px;
-    font-size: 1.8em;
+    padding: 10px 0;
+    font-size: 1.5rem;
     color: var(--text-color);
-    font-weight: 700;
+    margin-bottom: 20px;
   }
 
   .header-controls {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
     gap: 20px;
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 600px) {
+    .header-controls {
+      flex-direction: column;
+      gap: 15px;
+    }
   }
 
   .add-task {
     display: flex;
-    flex: 1;
     gap: 10px;
+    flex: 1;
   }
 
-  input {
+  .add-task input {
     flex: 1;
-    padding: 12px;
-    border: 2px solid #ecf0f1;
-    border-radius: 5px;
-    font-size: 1em;
+    height: 40px;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
     background-color: var(--task-background);
     color: var(--text-color);
-  }
-
-  button {
-    background-color: var(--button-background);
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1em;
-    transition: background-color 0.3s ease;
-  }
-
-  button:hover {
-    background-color: var(--button-hover);
   }
 
   .sort-controls {
@@ -198,28 +214,89 @@
     align-items: center;
   }
 
+  @media (max-width: 600px) {
+    .sort-controls {
+      width: 100%;
+    }
+
+    .sort-controls select {
+      flex: 1;
+    }
+  }
+
   select {
-    padding: 12px;
-    border: 2px solid #ecf0f1;
-    border-radius: 5px;
+    height: 40px;
+    padding: 8px 28px 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
     background-color: var(--task-background);
     color: var(--text-color);
-    font-size: 1em;
+    font-size: 1rem;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cpath fill='%23666' d='M0 2l4 4 4-4z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+  }
+
+  button {
+    height: 40px;
+    padding: 8px 16px;
+    background-color: var(--button-background);
+    color: white;
+    border: none;
+    border-radius: 4px;
     cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.2s;
+  }
+
+  button:hover {
+    background-color: var(--button-hover);
+  }
+
+  .square-button {
+    width: 40px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    line-height: 0;
+  }
+
+  .square-button::before {
+    content: '+';
+    position: relative;
+    top: -2px;
+  }
+
+  .square-button:hover {
+    background-color: var(--button-hover);
   }
 
   .sort-direction {
-    padding: 12px;
-    width: 45px;
+    width: 40px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .task-list {
     min-height: 150px;
     border: 2px solid #ecf0f1;
     border-radius: 10px;
-    padding: 20px;
+    padding: 10px;
     margin: 20px 0;
     background-color: var(--container-background);
+  }
+
+  @media (max-width: 600px) {
+    .task-list {
+      padding: 8px;
+      margin: 15px 0;
+    }
   }
 
   .no-tasks {
@@ -233,11 +310,12 @@
   }
 
   .progress-bar {
-    height: 30px;
+    width: 100%;
+    height: 20px;
     background-color: #ecf0f1;
     border-radius: 5px;
-    margin: 20px 0;
     overflow: hidden;
+    margin-top: 20px;
     position: relative;
   }
 
@@ -253,18 +331,35 @@
     top: 50%;
     transform: translate(-50%, -50%);
     color: #2c3e50;
-    font-weight: bold;
+    font-size: 0.9rem;
+    font-weight: 500;
     white-space: nowrap;
     text-shadow: 0 0 2px rgba(255, 255, 255, 0.8);
   }
 
   .clear-completed {
-    margin-top: 10px;
+    margin-top: 20px;
     background-color: #e74c3c;
-    width: 100%;
   }
 
   .clear-completed:hover {
     background-color: #c0392b;
+  }
+
+  .tasks-container::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .tasks-container::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .tasks-container::-webkit-scrollbar-thumb {
+    background-color: var(--button-background);
+    border-radius: 4px;
+  }
+
+  .tasks-container::-webkit-scrollbar-thumb:hover {
+    background-color: var(--button-hover);
   }
 </style>

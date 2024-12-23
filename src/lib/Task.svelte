@@ -69,8 +69,12 @@
     <span class:completed={task.completed}>{task.name}</span>
   {/if}
   <div class="actions">
-    <span class="date-text">{formatDate(task.createdAt)}</span>
-    <button on:click={startEditing} class="edit-btn" aria-label="Edit task">
+    <span class="date-text mobile-hide">{formatDate(task.createdAt)}</span>
+    <button 
+      on:click|preventDefault|stopPropagation={startEditing}
+      on:touchend|preventDefault|stopPropagation={startEditing}
+      class="edit-btn" 
+      aria-label="Edit task">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
         <path d="M20.71 5.63l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41zM3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z"/>
       </svg>
@@ -90,7 +94,7 @@
     background-color: var(--task-background);
     align-items: center;
     padding: 15px;
-    margin: 10px 0;
+    margin: 15px 5px;
     background-color: var(--task-background);
     border-radius: 8px;
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
@@ -159,5 +163,20 @@
     font-size: 0.85rem;
     margin: 0 10px;
     white-space: nowrap;
+  }
+
+  @media (max-width: 600px) {
+    .mobile-hide {
+      display: none;
+    }
+
+    .task {
+      padding: 12px;
+      margin: 8px 2px;
+    }
+
+    .actions {
+      gap: 8px;
+    }
   }
 </style>

@@ -9,7 +9,6 @@
   onMount(() => {
     // Load tasks from localStorage
     const savedTasks = localStorage.getItem('tasks');
-    console.log(savedTasks);
     if (savedTasks) {
       tasks = JSON.parse(savedTasks);
     }
@@ -43,17 +42,23 @@
 </script>
 
 <main>
-  <button on:click={toggleTheme} class="theme-toggle">Toggle Theme</button>
+  <button on:click={toggleTheme} class="theme-toggle" title={darkMode ? 'Switch to light theme' : 'Switch to dark theme'}>
+    {#if darkMode}
+      ☀️
+    {:else}
+      🌙
+    {/if}
+  </button>
   <div class="sections-container">
-    <Section title="Tasks" bind:tasks={tasks} />
+    <Section title="ToDo Tasks" bind:tasks={tasks} />
   </div>
 </main>
 
 <style>
   :global(:root) {
-    --background-color: #ffffff;
+    --background-color: #f5f6fa;
     --text-color: #2c3e50;
-    --container-background: #f5f6fa;
+    --container-background: #ffffff;
     --task-background: #ffffff;
     --task-hover: #f8f9fa;
     --button-background: #3498db;
@@ -63,7 +68,7 @@
   :global([data-theme='dark']) {
     --background-color: #121212;
     --text-color: #ecf0f1;
-    --container-background: #1e1e1e;
+    --container-background: #1d1d1d;
     --task-background: #2d2d2d;
     --task-hover: #383838;
     --button-background: #2980b9;
@@ -72,32 +77,47 @@
 
   main {
     padding: 20px;
-    background-color: var(--background-color);
-    color: var(--text-color);
     min-height: 100vh;
+    background-color: var(--background-color);
+    transition: background-color 0.3s ease;
   }
 
-  .sections-container {
-    display: flex;
-    justify-content: space-around;
-    gap: 20px;
-    margin-top: 60px;
+  @media (max-width: 600px) {
+    main {
+      padding: 0;
+    }
+
+    .theme-toggle {
+      top: 15px;
+      right: 15px;
+      width: 35px;
+      height: 35px;
+      font-size: 1rem;
+    }
   }
 
   .theme-toggle {
     position: fixed;
     top: 20px;
     right: 20px;
-    background-color: var(--button-background);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--task-background);
+    color: var(--text-color);
+    border: 1px solid var(--text-color);
+    border-radius: 50%;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    font-size: 1.2rem;
+    transition: all 0.2s ease;
+    padding: 0;
+    z-index: 1000;
   }
 
   .theme-toggle:hover {
-    background-color: var(--button-hover);
+    transform: scale(1.1);
+    background-color: var(--task-hover);
   }
 </style>
