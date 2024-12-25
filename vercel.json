@@ -19,5 +19,11 @@
       "source": "/(.*)",
       "destination": "/"
     }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)/?$",
+      "dest": "/$1.html"
+    }
   ]
 }
