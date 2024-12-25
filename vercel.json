@@ -14,10 +14,10 @@
       }
     }
   ],
-  "routes": [
+  "rewrites": [
     {
-      "src": "/(.*)/?$",
-      "dest": "/$1.html"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
