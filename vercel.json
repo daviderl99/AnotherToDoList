@@ -5,15 +5,6 @@
   "devCommand": "npm run dev",
   "installCommand": "npm install",
   "regions": ["fra1"],
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/node",
-      "config": {
-        "nodeVersion": "20.x"
-      }
-    }
-  ],
   "outputDirectory": ".svelte-kit/output/client",
   "rewrites": [
     {
