@@ -3,13 +3,5 @@
   "framework": "sveltekit",
   "buildCommand": "npm run build",
   "devCommand": "npm run dev",
-  "installCommand": "npm install",
-  "regions": ["fra1"],
-  "outputDirectory": ".svelte-kit/output/client",
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
-  ]
+  "installCommand": "npm install"
 }
