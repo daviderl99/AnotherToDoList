@@ -1,6 +1,6 @@
 # 🎯 Another Todo List
 
-*Because the world definitely needed another one of these...*
+*A simple and modern take on the classic todo list app.*
 
 ## 🛠️ Tech Stack
 
@@ -21,16 +21,10 @@
 1. Clone this revolutionary repository
 2. Run `npm install`
 3. Run `npm run dev`
-4. Marvel at yet another todo list app
+4. Open your browser and start managing your tasks
 
 ## 📝 License
 
 MIT
 
-## 🤝 Contributing
-
-Feel free to contribute! Although let's be honest, it's a todo list - how much more can we really add? 
-
----
-
-*Built with ❤️ and a slight sense of irony in 2024*
+*Built with a slight sense of irony in 2024*
