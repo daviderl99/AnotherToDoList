@@ -9,7 +9,9 @@
 - **Vite**
 - **TailwindCSS**
 
+## Usage
+
 1. Clone this revolutionary repository
 2. Run `npm install`
-3. Run `npm run dev`
+3. Run `npm run start`
 
